@@ -34,6 +34,6 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
           args: >
-            -Dsonar.projectKey=${{ github.event.inputs.sonar_project_key }}
+            -Dsonar.projectKey=jpetstore-6 github.event.inputs.sonar_project_key }}
             -Dsonar.java.binaries=target/classes
             -Dsonar.java.libraries=target/dependency
