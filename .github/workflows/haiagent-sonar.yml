@@ -1,10 +1,6 @@
 name: HaiAgent SonarQube Analysis
 on:
   workflow_dispatch:
-    inputs:
-      sonar_project_key:
-        description: SonarQube project / component key
-        required: true
 
 jobs:
   sonar:
@@ -14,26 +10,10 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Set up Java 17
-        uses: actions/setup-java@v4
-        with:
-          java-version: '17'
-          distribution: 'temurin'
-          cache: maven
-
-      - name: Compile (Maven)
-        run: |
-          if [ -f pom.xml ]; then
-            mvn -B compile -DskipTests --quiet || true
-          fi
-
       - name: SonarQube scan
         uses: SonarSource/sonarqube-scan-action@v6
         env:
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
-          args: >
-            -Dsonar.projectKey=jpetstore-6 github.event.inputs.sonar_project_key }}
-            -Dsonar.java.binaries=target/classes
-            -Dsonar.java.libraries=target/dependency
+          args: -Dsonar.projectKey=jpetstore-6
